@@ -1,5 +1,5 @@
 .container {
-	width: 280px;
+	width: 500px;
 	min-height: 100px;
 	max-height: 300px;
 	overflow-y: auto;
@@ -27,4 +27,23 @@ tbody tr:hover {
 .add {
 	text-align: center;
 	margin-top: 10px;
+}
+
+.text-red {
+	color: #e54d42;
+}
+.text-green {
+	color: #07c160;
+}
+
+.bg-red {
+	background-color: #e54d42;
+	color: white;
+}
+.del-btn {
+	border: none;
+}
+
+.f-csp {
+	cursor: pointer;
 }
