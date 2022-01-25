@@ -1,6 +1,12 @@
 function changeBg(){
 	var e=document.createElement('style');
-	e.innerText='*,*::before{background-color:#555 !important;color:#ddd;}';
+	e.innerText='*,*::before{background-color:#555 !important;color:#ddd;user-select:auto !important;}';
+	document.head.appendChild(e);
+}
+
+function changeAutoSelect(){
+	var e=document.createElement('style');
+	e.innerText='html,body,div,p,span{user-select:auto !important;}';
 	document.head.appendChild(e);
 }
 
@@ -13,6 +19,7 @@ function picInPic() {
 
 let changeBgChars = 'cb';
 let picInPicChars = 'vv';
+let autoSelect = 'se';
 let hupuRt = 'rt';
 let prevChars = '';
 
@@ -24,6 +31,10 @@ document.onkeydown = e => {
     }
     if (prevChars.indexOf(picInPicChars) > -1){
         picInPic()
+        prevChars = '';
+    }
+    if (prevChars.indexOf(autoSelect) > -1){
+        changeAutoSelect()
         prevChars = '';
     }
     if (prevChars.indexOf(hupuRt) > -1){
