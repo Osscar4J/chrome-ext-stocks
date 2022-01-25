@@ -182,4 +182,3 @@ let stocks = localStorage.stocks.split(',')
 stocks.forEach(s => {
 	getFundInfo(handleFund, s)
 })
-
