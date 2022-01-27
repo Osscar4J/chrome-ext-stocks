@@ -23,12 +23,34 @@ let autoSelect = 'se';
 let hupuRt = 'rt';
 let prevChars = '';
 
+let openRmE = 're'
+let rmEState = false
+let currEle = null
+let prevEle = null
+
 document.onkeydown = e => {
     prevChars += e.key
     if (prevChars.indexOf(changeBgChars) > -1){
         changeBg()
         prevChars = '';
     }
+
+    if (prevChars.indexOf(openRmE) > -1){
+        rmEState = !rmEState
+        if (!rmEState){
+            if (currEle){
+                currEle.style = ''
+                currEle.onclick = null
+                currEle = null
+            }
+            if (prevEle){
+                prevEle.style = ''
+                prevEle = null
+            }
+        }
+        prevChars = '';
+    }
+
     if (prevChars.indexOf(picInPicChars) > -1){
         picInPic()
         prevChars = '';
@@ -50,6 +72,26 @@ document.onkeydown = e => {
     }
     if (e.key.toLocaleLowerCase() == "escape"){
         window.speechSynthesis.cancel()
+    }
+}
+
+// 移除页面元素
+document.onmousemove = e => {
+    if (rmEState){
+        if (currEle != e.target){
+            currEle = e.target
+            currEle.style = 'border: 2px dashed red !important'
+            currEle.onclick = ev => {
+                ev.preventDefault()
+                ev.stopPropagation()
+                currEle.parentElement.removeChild(currEle)
+            }
+            if (prevEle){
+                prevEle.style = ''
+                prevEle.onclick = null
+            }
+            prevEle = currEle
+        }
     }
 }
 
@@ -78,11 +120,14 @@ document.body.appendChild(pop)
 
 document.onmouseup = e => {
     let txt = window.getSelection().toString()
+    let top = e.pageY + "px"
+    let left = e.pageX + "px"
+
     if (txt){
         selectedTxt = txt
         if (popId != e.target.id){
-            pop.style.top = e.pageY + "px"
-            pop.style.left = e.pageX + "px"
+            pop.style.top = top
+            pop.style.left = left
             pop.style.display = "block"
         }
     } else if (pop.style.display == "block") {
