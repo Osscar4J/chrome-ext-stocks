@@ -47,3 +47,7 @@ tbody tr:hover {
 .f-csp {
 	cursor: pointer;
 }
+
+.rmel-shadow {
+	box-shadow: 0 2px 10px 0 rgb(255 1 1 / 10%) !important;
+}

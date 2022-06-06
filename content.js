@@ -39,12 +39,14 @@ document.onkeydown = e => {
         rmEState = !rmEState
         if (!rmEState){
             if (currEle){
-                currEle.style = ''
+                // currEle.style = ''
+                prevEle.className = prevEle.className.replace(/\srmel-shadow/, '')
                 currEle.onclick = null
                 currEle = null
             }
             if (prevEle){
-                prevEle.style = ''
+                // prevEle.style = ''
+                prevEle.className = prevEle.className.replace(/\srmel-shadow/, '')
                 prevEle = null
             }
         }
@@ -75,19 +77,23 @@ document.onkeydown = e => {
     }
 }
 
+let prevShadow = ''
+
 // 移除页面元素
 document.onmousemove = e => {
     if (rmEState){
         if (currEle != e.target){
             currEle = e.target
-            currEle.style = 'border: 2px dashed red !important'
+            // currEle.style.border = "1px dashed red !important"
+            currEle.className += ' rmel-shadow'
             currEle.onclick = ev => {
                 ev.preventDefault()
                 ev.stopPropagation()
                 currEle.parentElement.removeChild(currEle)
             }
+
             if (prevEle){
-                prevEle.style = ''
+                prevEle.className = prevEle.className.replace(/\srmel-shadow/, '')
                 prevEle.onclick = null
             }
             prevEle = currEle
@@ -135,3 +141,9 @@ document.onmouseup = e => {
         selectedTxt = ""
     }
 }
+
+
+// 注入默认样式
+let e=document.createElement('style');
+e.innerText='.rmel-shadow {box-shadow: 0 2px 10px 0 rgb(255 1 1 / 1) !important;}';
+document.head.appendChild(e);
